@@ -4,6 +4,9 @@ Effective Java Summary, 3rd Edition
 ### Table of Contents  
 #### [General Programming](#9)
 
+[Item 57: Minimize the scope of local variables](#57)  
+[Item 58: Prefer for-each loops to traditional for loops](#58)  
+[Item 59: Know and use the libraries](#59)  
 [Item 60: Avoid float and double if exact answers are required](#60)  
 [Item 61: Prefer primitive types to boxed primitives](#61)  
 [Item 62: Avoid strings where other types are more appropriate](#62)  
@@ -12,6 +15,20 @@ Effective Java Summary, 3rd Edition
 [Item 67: Optimize judiciously](#67)  
 
 <a name="9"/>
+<a name="57"/> 
+
+## Item 57: Minimize the scope of local variables
+TBD
+
+<a name="58"/> 
+
+## Item 58: Prefer for-each loops to traditional for loops
+TBD
+
+<a name="59"/> 
+
+## Item 59: Know and use the libraries
+TBD
 
 <a name="60"/>  
 

@@ -7,6 +7,7 @@ Effective Java Summary, 3rd Edition
 [Item 61: Prefer primitive types to boxed primitives](#61)  
 [Item 62: Avoid strings where other types are more appropriate](#62)  
 [Item 63: Beware the performance of string concatenation](#63)  
+[Item 64: Refer to objects by their interfaces](#64)  
 [Item 67: Optimize judiciously](#67)  
 
 <a name="9"/>
@@ -89,7 +90,28 @@ Don’t use the string concatenation operator to combine more than a few strings
 	}
 
 ```
+<a name="64"/>
       
+## Item 64: Refer to objects by their interfaces  
+
+**Use interfaces over classes to refer to objects**  
+
+If you get into the habit of using interfaces as types, your program will be much more flexible. If you decide that you want to switch implementations, all you have to do is change the class name in the constructor. Check the the general-purpose implementations of the ```List``` interface below.
+
+```
+// Use interface as a type
+List<String> arrayList = new ArrayList<String>() // offers constant-time positional access and is just plain fast
+List<String> linkedList = new LinkedList<String>() // 
+```
+
+**It is entirely appropriate to refer to an object by a class rather than an interface if no appropriate interface exists**
+
+Value Classes | Class-based framework | Classes that implement an interface but also provide extra methods not found in the interfac
+--- | --- | ---
+*String* and *BigInteger* | Many *java.io* classes such as *OutputStream* | *PriorityQueue* has a comparator method that is not present on the *Queue* interface.
+
+
+
 <a name="67"/>
 
 ## Item 67: Optimize judiciously

@@ -7,3 +7,6 @@ Effective Java Summary, 3rd Edition
 ...snip...    
 <a name="headers"/>
 ## Headers
+
+<a name="emphasis"/>
+## Headers

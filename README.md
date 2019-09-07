@@ -26,27 +26,27 @@ Effective Java Summary, 3rd Edition
  **When you mix primitives and boxed primitives in an operation, the boxed primitive is auto-unboxed. If a null object reference is auto-unboxed, you get a NullPointerException**   
 
  ```
-        static Integer i;
-     	public static void main(String[] args) {
-		if (i == 42) {
+ 	static Integer i;
+ 	public static void main(String[] args) {
+    	   if (i == 42) {
 		System.out.println("Do not mix primitive and boxed");
-		}
-	}
-``` 
+    	   }
+	}	
+ ``` 
 **Auto-boxing and auto-unboxing cause significant performance degradation. Compare the performance of the code snippets below:** 
 
 ```
-    Integer sumBoxed = 0L;
-    for (int i = 0; i < Integer.MAX_VALUE; i++) 
-    { 
-       sumBoxed += i;
-    }	
-    ...
-    int sumBoxed = 0L;
-    for (int i = 0; i < Integer.MAX_VALUE; i++) 
-    { 
-       sumBoxed += i;
-    }	
+	Integer sumBoxed = 0L;
+    	for (int i = 0; i < Integer.MAX_VALUE; i++) 
+    	{ 
+      	    sumBoxed += i;
+    	}	
+        ...
+     	int sumBoxed = 0L;
+    	for (int i = 0; i < Integer.MAX_VALUE; i++) 
+    	{ 
+       	    sumBoxed += i;
+    	}	
 ```
     
 <a name="67"/>

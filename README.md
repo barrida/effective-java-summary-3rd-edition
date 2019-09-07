@@ -9,4 +9,4 @@ Effective Java Summary, 3rd Edition
 ## Headers
 
 <a name="emphasis"/>
-## Headers
+## Emphasis

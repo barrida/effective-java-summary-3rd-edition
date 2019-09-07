@@ -5,8 +5,8 @@ Effective Java Summary, 3rd Edition
 #### [General Programming](#9)
 
 [Item 61: Prefer primitive types to boxed primitives](#61)  
-[Item 62: Avoid strings where other types are more appropriate](#62) 
-[Item 63: Beware the performance of string concatenation](#63)    
+[Item 62: Avoid strings where other types are more appropriate](#62)  
+[Item 63: Beware the performance of string concatenation](#63)  
 [Item 67: Optimize judiciously](#67)  
 
 <a name="9"/>
@@ -52,7 +52,7 @@ Effective Java Summary, 3rd Edition
     	}	
 ```
 
-<a name=62/>
+<a name="62"/>
 
 ## Item 62: Avoid strings where other types are more appropriate
 

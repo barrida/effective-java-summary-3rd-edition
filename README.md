@@ -5,12 +5,14 @@ Effective Java Summary, 3rd Edition
 #### [General Programming](#9)
 
 [Item 61: Prefer primitive types to boxed primitives](#61)  
+[Item 63: Beware the performance of string concatenation](#63)  
 [Item 67: Optimize judiciously](#67)  
 
 <a name="9"/>
 <a name="61"/>  
 
 ## Item 61: Prefer primitive types to boxed primitives 
+
 **Applying the == operator to boxed primitives is almost always wrong. The two boxed primitives can have same value and different identities, whereas the primitives have only values. Check the code below:** 
 ```
 	int a = new Integer(10);
@@ -48,7 +50,34 @@ Effective Java Summary, 3rd Edition
        	    sumBoxed += i;
     	}	
 ```
-    
+<a name="63"/>
+
+## Item 63: Beware the performance of string concatenation 
+
+The string concatenation operator (+) does not scale. Using the string concatenation operator repeatedly to concatenate n strings requires time quadratic in n.   
+
+Don’t use the string concatenation operator to combine more than a few strings unless performance is irrelevant. Use StringBuilder’s append method in place of a String.
+
+```
+	// Inappropriate use of string concatenation - Performs poorly!
+	public static String stringConcatenation() {
+		String result = ""; 
+		for (int i = 0; i < 100000; i++) 
+			result += "concat"; // String concatenation
+		return result;
+	}
+```
+```
+	// Correct use of string concatenation
+	public static String stringBuilderConcatenation() { 
+		StringBuilder result = new StringBuilder(100000);
+		for (int i = 0; i < 100000; i++) 
+			result.append("concat");
+		return result.toString();
+	}
+
+```
+      
 <a name="67"/>
 
 ## Item 67: Optimize judiciously

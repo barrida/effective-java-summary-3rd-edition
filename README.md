@@ -177,8 +177,8 @@ for (int i = 0; i < Integer.MAX_VALUE; i++) {
 Strings are poor substitutes for the primitive types, enums, and aggregate types:
 
 1. If a piece of data is numeric, it should be translated into the appropriate numeric type, such as int, float, or BigInteger.  
-2. If it’s the answer to a yes-or-no question, it should be translated into an appropriate enum type or a boolean.  
-3. If there’s an appropriate value type, whether primitive or object reference, you should use it; if there isn’t, you should write one.
+2. If itï¿½s the answer to a yes-or-no question, it should be translated into an appropriate enum type or a boolean.  
+3. If thereï¿½s an appropriate value type, whether primitive or object reference, you should use it; if there isnï¿½t, you should write one.
 =======
 
 <a name="62"/>

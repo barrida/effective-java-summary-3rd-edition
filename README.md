@@ -1,4 +1,4 @@
-# The Summary of the Effective Java (3rd edition)
+# The Summary of Effective Java (3rd edition)
 Notes on the Effective Java 3rd Edition by Bloch, Joshua and code samples.
 
 ### Table of Contents  

@@ -19,12 +19,12 @@ Effective Java Summary, 3rd Edition
 
 ## Item 57: Minimize the scope of local variables
 **Declare the variable where it is first used**   
-Tee reader will not be distracted to figure out where the variable is declared   
-**Keep methods small and focused**  
+The reader will not be distracted to figure out where the variable is declared  
+
 **Prefer for loops to while loops, assuming the contents of the loop variable aren’t needed after the loop terminates.**  
 
 Advantages of for lops over while loops    
-- Eliminate thecopy-paste errors
+- Eliminate copy-paste errors
 - Shorter and more readable
 - Declare loop variables, limiting their scope to the exact region where they’re needed.
 

@@ -18,17 +18,95 @@ Effective Java Summary, 3rd Edition
 <a name="57"/> 
 
 ## Item 57: Minimize the scope of local variables
-TBD
+**Declare the variable where it is first used**   
+Tee reader will not be distracted to figure out where the variable is declared   
+**Keep methods small and focused**  
+**Prefer for loops to while loops, assuming the contents of the loop variable aren’t needed after the loop terminates.**  
+
+Advantages of for lops over while loops    
+- Eliminate thecopy-paste errors
+- Shorter and more readable
+- Declare loop variables, limiting their scope to the exact region where they’re needed.
+
+```
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(1);
+		list.add(2);
+		list.add(3);
+
+		// Not a best practice! Variable "i" might be used somewhere later, such
+		// as the for-loop below
+		Iterator<Integer> i = list.iterator();
+		while (i.hasNext()) {
+			Integer value = i.next();
+			System.out.println(value);
+		}
+
+		// Idiom for iterating when you need the iterator but the the best. Look
+		// at the Item 58 for better approach!
+		for (Iterator<Integer> j = list.iterator(); j.hasNext();) {
+			Integer value = j.next();
+			System.out.println(value);
+		}
+
+		// ...Then you wrote a 100 lines of code here and forgot the Iterator
+		// variable "i"...
+
+		// What happens if you accidentally use the variable "i" below? :)
+		for (Iterator<Integer> j = list.iterator(); j.hasNext();) {
+			Integer value = i.next(); // ???
+			System.out.println(value);
+		}
+
+
+```
 
 <a name="58"/> 
 
 ## Item 58: Prefer for-each loops to traditional for loops
-TBD
+
+Traditional for loop distracts the programmer because of index variables. It gives you many chances to use the wrong variable. for-each loop hides the iterator or index variable. 
+
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(1);
+		list.add(2);
+		list.add(3);
+	
+		List<String> listString = new ArrayList<String>();
+		listString.add("string1");
+		listString.add("string2");
+		listString.add("string3");
+		
+		// Iterate with for-each loop. Better then the traditional one!
+		for (Integer integer : list) {
+			System.out.println(integer);
+		}
+		
+		// for-each loops are even greater when it comes to nested iteration
+		for (Integer integer : list) {
+			for (String string : listString) {
+				System.out.println("nested foreach loop");
+			}
+		}
+		
+There are some cases that you **do need** to use an ordinary for loop. For instance, you want to replace the value of a list while you iterate a collection. Please check the book for other examples.
+
+		// Transforming a list with ordinary for loop
+		for (int i = 0 ; i < integerList.size(); i++) {
+			System.out.println("before: " + integerList.get(i));
+			integerList.set(i, 3);
+			System.out.println("after: "+integerList.get(i));
+		}
+
 
 <a name="59"/> 
 
 ## Item 59: Know and use the libraries
-TBD
+The takeaway from this section is "Don't reinvent the wheel!". The author explains the pitfalls of most developers fall into by giving random number generation example. Check the library before you try an ad hoc solution.
+
+1. By using a standard library, you take advantage of the knowledge of the experts who wrote it and the experience of those who used it before you.
+2. The performance of standard libraries tends to improve over time, with no effort on your part.
+3. You don’t have to waste your time writing ad hoc solutions to problems that are only marginally related to your work.
 
 <a name="60"/>  
 

@@ -17,7 +17,9 @@ Notes on the Effective Java 3rd Edition by Bloch, Joshua and code samples.
 [Item 64: Refer to objects by their interfaces](#64)  
 [Item 67: Optimize judiciously](#67)  
 
-<a name="9"/>
+<a name="4"/>
+
+# Classes and Interfaces
 
 <a name="17">  
 
@@ -34,6 +36,10 @@ Rules:
 4. If the instance fields include references to mutable objects, don't allow those objects to be changed:
  - Don't provide methods that modify the mutable objects.
  - Don't share references to the mutable objects. Never store references to external, mutable objects passed to the constructor; if necessary, create copies, and store references to the copies. Similarly, create copies of your internal mutable objects when necessary to avoid returning the originals in your methods.
+
+<a name="9"/>
+
+# General Programming
 
 <a name="57"/> 
 

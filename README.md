@@ -2,6 +2,9 @@
 Notes on the Effective Java 3rd Edition by Bloch, Joshua and code samples.
 
 ### Table of Contents  
+#### [Classes and Interfaces](#4)  
+[Item 17: Minimize Mutability](#17)     
+
 #### [General Programming](#9)
 
 [Item 57: Minimize the scope of local variables](#57)  
@@ -15,6 +18,23 @@ Notes on the Effective Java 3rd Edition by Bloch, Joshua and code samples.
 [Item 67: Optimize judiciously](#67)  
 
 <a name="9"/>
+
+<a name="17">  
+
+## Item 17: Minimize Mutability  
+
+Immutable object can be in exactly one state, the state in which it was created  
+Immutable objects are inherently thread-safe; they require no synchronization. Therefore, they can be shared freely.  
+You don't need to make defensive copies of them as they would be equivalent to the originals 
+
+Rules:  
+1 .Don't provide "setter" methods — methods that modify fields or objects referred to by fields.
+2. Make all fields final and private.
+3. Don't allow subclasses to override methods. The simplest way to do this is to declare the class as final. A more sophisticated approach is to make the constructor private and construct instances in factory methods.
+4. If the instance fields include references to mutable objects, don't allow those objects to be changed:
+ - Don't provide methods that modify the mutable objects.
+ - Don't share references to the mutable objects. Never store references to external, mutable objects passed to the constructor; if necessary, create copies, and store references to the copies. Similarly, create copies of your internal mutable objects when necessary to avoid returning the originals in your methods.
+
 <a name="57"/> 
 
 ## Item 57: Minimize the scope of local variables

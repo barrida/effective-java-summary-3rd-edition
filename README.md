@@ -28,7 +28,7 @@ Immutable objects are inherently thread-safe; they require no synchronization. T
 You don't need to make defensive copies of them as they would be equivalent to the originals 
 
 Rules:  
-1 .Don't provide "setter" methods — methods that modify fields or objects referred to by fields.
+1. Don't provide "setter" methods — methods that modify fields or objects referred to by fields.
 2. Make all fields final and private.
 3. Don't allow subclasses to override methods. The simplest way to do this is to declare the class as final. A more sophisticated approach is to make the constructor private and construct instances in factory methods.
 4. If the instance fields include references to mutable objects, don't allow those objects to be changed:

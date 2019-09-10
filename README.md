@@ -2,8 +2,11 @@
 Notes on the Effective Java 3rd Edition by Bloch, Joshua and code samples.
 
 ### Table of Contents  
-#### [Classes and Interfaces](#4)  
-[Item 17: Minimize Mutability](#17)     
+#### [Classes and Interfaces](#4)
+  
+[Item 15: Minimize the accessibility of classes and members](#15)     
+[Item 16: In public classes, use accessor methods, not public fields](#16)     
+[Item 17: Minimize Mutability](#17)  
 
 #### [General Programming](#9)
 
@@ -21,15 +24,76 @@ Notes on the Effective Java 3rd Edition by Bloch, Joshua and code samples.
 
 # Classes and Interfaces
 
+<a name="15">
+
+## Item 15: Minimize the accessibility of classes and members  
+  
+This section is a review of encapsulation (information hiding)  
+
+Advantages of encapsulation (information hiding):  
+- Speeds up the system development as components can be developed in parallel
+- Enables effective performance tuning. Components can be optimized seperately without affecting the others 
+- Increases software reuse as components aren’t tightly coupled
+- Decrease the risk in building large systems, improves resilience 
+
+Proper use of these modifiers is essential to information hiding. Make each class or member as inaccessible as possible.  
+
+**Classes**  
+
+- For top-level (non-nested) classes and interfaces, there are only two possible access levels: package-private and public.
+- If a package-private top-level class or interface is used by only one class, consider making the top-level class a private static nested class of the sole class that uses it
+
+**Members (fields, methods, nested classes, and nested interfaces)**   
+
+Modifier | Class | Package | Subclass | World
+--- | --- | --- | --- | ---
+public | Y | Y | Y | Y
+protected | Y | Y | Y | N
+package-private (no modifier) | Y | Y | N | N
+private | Y | N | N | N
+
+**Ensure that objects referenced by public static final fields are immutable**
+
+```
+// Problem: Potential security hole! Clients will be able to modify the contents of the array
+public static final Thing[] VALUES = { ... };
+```
+
+```
+// Solution 1: Make the array private and add a public immutable list 
+private static final Integer[] PRIVATE_VALUES = { ... };
+public static final List <Integer> VALUES = Collections.unmodifiableList( Arrays.asList( PRIVATE_VALUES));
+```
+```
+// Solution 2: Make the array private and create a public static final function that returns a copy an array 
+private static final Integer[] PRIVATE_VALUES = { ... };
+public static final Integer[] getValues() {
+  return PRIVATE_VALUES.clone();
+}
+```
+
+<a name="16">
+
+## Item 16: In public classes, use accessor methods, not public fields  
+
+If a class is accessible outside its package, provide accessor methods. The classic approach is as follows:  
+- Private fields
+- Public accessor methods (getters) and mutators (setters)	
+
+However, "package-private" and "private nested classes" can expose their data fields.
+
+
 <a name="17">  
 
 ## Item 17: Minimize Mutability  
 
-Immutable object can be in exactly one state, the state in which it was created  
-Immutable objects are inherently thread-safe; they require no synchronization. Therefore, they can be shared freely.  
-You don't need to make defensive copies of them as they would be equivalent to the originals 
+- Immutable object can be in exactly one state, the state in which it was created  
+- Immutable objects are inherently thread-safe; they require no synchronization. Therefore, they can be shared freely  
+- You don't need to make defensive copies of them as they would be equivalent to the originals  
+- Classes should be immutable unless there’s a very good reason to make them mutable  
+- Declare every field private final unless there’s a good reason to do otherwise  
 
-Rules:  
+How to make a class immutable? This is a classic interview question  
 1. Don't provide "setter" methods — methods that modify fields or objects referred to by fields.
 2. Make all fields final and private.
 3. Don't allow subclasses to override methods. The simplest way to do this is to declare the class as final. A more sophisticated approach is to make the constructor private and construct instances in factory methods.

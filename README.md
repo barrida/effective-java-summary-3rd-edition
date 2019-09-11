@@ -7,7 +7,7 @@ Notes on the Effective Java 3rd Edition by Bloch, Joshua and code samples.
 [Item 15: Minimize the accessibility of classes and members](#15)     
 [Item 16: In public classes, use accessor methods, not public fields](#16)     
 [Item 17: Minimize Mutability](#17)  
-[Item 22: Use interfaces only to define types]
+[Item 22: Use interfaces only to define types](#22)
 
 #### [General Programming](#9)
 

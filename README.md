@@ -7,6 +7,7 @@ Notes on the Effective Java 3rd Edition by Bloch, Joshua and code samples.
 [Item 15: Minimize the accessibility of classes and members](#15)     
 [Item 16: In public classes, use accessor methods, not public fields](#16)     
 [Item 17: Minimize Mutability](#17)  
+[Item 22: Use interfaces only to define types]
 
 #### [General Programming](#9)
 
@@ -100,6 +101,42 @@ How to make a class immutable? This is a classic interview question
 4. If the instance fields include references to mutable objects, don't allow those objects to be changed:
  - Don't provide methods that modify the mutable objects.
  - Don't share references to the mutable objects. Never store references to external, mutable objects passed to the constructor; if necessary, create copies, and store references to the copies. Similarly, create copies of your internal mutable objects when necessary to avoid returning the originals in your methods.
+
+<a name="22">
+
+## Item 22: Use interfaces only to define types  
+
+Interfaces should be used only to define types. They should not be used merely to export constants.
+
+**The constant interface pattern is a poor use of interfaces**  
+
+```
+// Constant interface antipattern - do not use! 
+public interface PhysicalConstants { 
+
+static final double AVOGADROS_NUMBER = 6.022_140_857e23; 
+static final double BOLTZMANN_CONSTANT = 1.380_648_52e-23; 
+static final double ELECTRON_MASS = 9.109_383_56e-31;
+
+}
+
+```
+
+**If the constants are best viewed as members of an enumerated type, you should export them with an enum type (Item 34)**  
+**If the constants are NOT strongly tied to an existing class or interface, export the constants with a noninstantiable utility class**
+
+```
+public class ConstantsFoo {
+
+	private ConstantsFoo(){} // prevent instantiation
+	
+	public static final double AVOGADROS_NUMBER = 6.022_140_857e23;
+	public static final double BOLTZMANN_CONST = 1.380_648_52e-23;
+	public static final double ELECTRON_MASS = 9.109_383_56e-31;
+}
+
+
+```
 
 <a name="9"/>
 

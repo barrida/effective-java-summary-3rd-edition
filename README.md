@@ -4,10 +4,11 @@ Notes on the Effective Java 3rd Edition by Bloch, Joshua and code samples.
 ### Table of Contents  
 #### [Classes and Interfaces](#4)
   
-[Item 15: Minimize the accessibility of classes and members](#15)     
-[Item 16: In public classes, use accessor methods, not public fields](#16)     
+[Item 15: Minimize the accessibility of classes and members](#15)  
+[Item 16: In public classes, use accessor methods, not public fields](#16)       
 [Item 17: Minimize Mutability](#17)  
-[Item 22: Use interfaces only to define types](#22)
+[Item 18: Favor composition over inheritance](#18)  
+[Item 22: Use interfaces only to define types](#22)  
 
 #### [General Programming](#9)
 
@@ -101,6 +102,14 @@ How to make a class immutable? This is a classic interview question
 4. If the instance fields include references to mutable objects, don't allow those objects to be changed:
  - Don't provide methods that modify the mutable objects.
  - Don't share references to the mutable objects. Never store references to external, mutable objects passed to the constructor; if necessary, create copies, and store references to the copies. Similarly, create copies of your internal mutable objects when necessary to avoid returning the originals in your methods.
+
+<a name="18">
+
+## Item 18: Favor composition over (implementation) inheritance (when one class extends another)  
+
+**Inheritance violates encapsulation unless the superclass’s authors have designed it specifically for the purpose of being extended**
+
+
 
 <a name="22">
 

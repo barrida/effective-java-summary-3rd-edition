@@ -109,7 +109,72 @@ How to make a class immutable? This is a classic interview question
 
 **Inheritance violates encapsulation unless the superclass’s authors have designed it specifically for the purpose of being extended**
 
+**How to use composition and forwarding technique**  
 
+Let's say you want to extend the functionality of the Set<E> interface.  
+
+1. Create a Forwarding class
+
+- Step 1. Composition  
+Give your class a private field that references an instance of the existing class (Set<E>)
+
+```
+//your forwarding class
+public class ForwardingSet<E> implements Set<E> {
+ 	private final Set<E> s;
+ 	...
+}
+
+```
+- Step 2. Forwarding  
+Each instance method in the new class invokes the corresponding method on the contained instance of the existing class and returns the results  
+
+```
+    ...
+	@Override
+	public boolean add(E e) {
+		return s.add(e);
+	}
+
+	@Override
+	public boolean addAll(Collection<? extends E> c) {
+		return s.addAll(c);
+	}
+	...
+```
+
+2. Extend the forwarding class  
+
+```
+public class InstrumentedSet<E> extends ForwardingSet<E> {
+
+	// The number of attempted element insertions
+	private int addCount = 0;
+    
+    // constructor 
+	public InstrumentedSet(Set<E> s) {
+		super(s);
+	}
+
+	@Override
+	public boolean add(E e) {
+	...your new implementation ...
+	}
+	
+	//your new method
+	public int getAddCount() {
+		return addCount;
+	}
+```
+
+3. And it is ready to use  
+
+```
+	InstrumentedSet<String> s2 = new InstrumentedSet<>(new TreeSet<>());
+	s2.addAll(Arrays.asList("Snap", "Crackle", "Snap"));
+	System.out.println("Total: "  + s2.getAddCount());
+
+```
 
 <a name="22">
 

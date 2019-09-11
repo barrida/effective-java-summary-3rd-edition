@@ -105,7 +105,7 @@ How to make a class immutable? This is a classic interview question
 
 <a name="18">
 
-## Item 18: Favor composition over (implementation) inheritance (when one class extends another)  
+## Item 18: Favor composition over inheritance (when one class extends another)  
 
 **Inheritance violates encapsulation unless the superclass’s authors have designed it specifically for the purpose of being extended**
 
@@ -151,7 +151,7 @@ public class InstrumentedSet<E> extends ForwardingSet<E> {
 	// The number of attempted element insertions
 	private int addCount = 0;
     
-    // constructor 
+        // constructor 
 	public InstrumentedSet(Set<E> s) {
 		super(s);
 	}
@@ -160,6 +160,8 @@ public class InstrumentedSet<E> extends ForwardingSet<E> {
 	public boolean add(E e) {
 	...your new implementation ...
 	}
+	
+	....other overriden methods...
 	
 	//your new method
 	public int getAddCount() {

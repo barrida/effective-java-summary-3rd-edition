@@ -9,6 +9,7 @@ Notes on the Effective Java 3rd Edition by Bloch, Joshua and code samples.
 [Item 17: Minimize Mutability](#17)  
 [Item 18: Favor composition over inheritance](#18)  
 [Item 22: Use interfaces only to define types](#22)  
+[Item 25: Limit source files to a single top-level class](#25)  
 
 #### [General Programming](#9)
 
@@ -213,6 +214,37 @@ public class ConstantsFoo {
 
 
 ```
+
+<a name="25">  
+
+# Item 25: Limit source files to a single top-level class  
+
+Never put multiple top-level classes or interfaces in a single source file. Following this rule guarantees that you can’t have multiple definitions for a single class at compile time.  
+
+
+```
+// Static member classes instead of multiple top-level classes
+
+public class Test { 
+
+  public static void main( String[] args) { 
+  	System.out.println( Utensil.NAME + Dessert.NAME); 
+  } 
+  
+  private static class Utensil { 
+  	static final String NAME = "pan";
+  }
+    
+  private static class Dessert { 
+  	static final String NAME = "cake"; 
+  } 
+}
+
+
+```
+
+Bloch, Joshua. Effective Java (pp. 212-213). Pearson Education. Kindle Edition.  
+
 
 <a name="9"/>
 

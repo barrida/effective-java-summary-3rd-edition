@@ -2,16 +2,17 @@
 Notes on the Effective Java 3rd Edition by Bloch, Joshua and code samples.
 
 ### Table of Contents  
-#### [Classes and Interfaces](#4)
+#### [Classes and Interfaces](#4)  
   
 [Item 15: Minimize the accessibility of classes and members](#15)  
-[Item 16: In public classes, use accessor methods, not public fields](#16)       
+[Item 16: In public classes, use accessor methods, not public fields](#16)  
 [Item 17: Minimize Mutability](#17)  
 [Item 18: Favor composition over inheritance](#18)  
+[Item 20: Prefer interfaces to abstract classes](#20)  
 [Item 22: Use interfaces only to define types](#22)  
 [Item 25: Limit source files to a single top-level class](#25)  
 
-#### [General Programming](#9)
+#### [General Programming](#9)  
 
 [Item 57: Minimize the scope of local variables](#57)  
 [Item 58: Prefer for-each loops to traditional for loops](#58)  
@@ -25,7 +26,7 @@ Notes on the Effective Java 3rd Edition by Bloch, Joshua and code samples.
 
 <a name="4"/>
 
-# Classes and Interfaces
+# Classes and Interfaces  
 
 <a name="15">
 
@@ -108,7 +109,9 @@ How to make a class immutable? This is a classic interview question
 
 ## Item 18: Favor composition over inheritance (when one class extends another)  
 
-**Inheritance violates encapsulation unless the superclass’s authors have designed it specifically for the purpose of being extended**
+**Inheritance violates encapsulation unless the superclass’s authors have designed it specifically for the purpose of being extended**  
+
+The superclass’s implementation may change from release to release, and if it does, the subclass may break, even though its code has not been touched. As a consequence, a subclass must evolve in tandem with its superclass, unless the superclass’s authors have designed and documented it specifically for the purpose of being extended.  
 
 **How to use composition and forwarding technique**  
 
@@ -179,6 +182,27 @@ public class InstrumentedSet<E> extends ForwardingSet<E> {
 
 ```
 
+<a name="20">
+
+## Item 20: Prefer interfaces to abstract classes  
+
+**Advantages**  
+
+- Existing classes can easily be reconstructed to implement a new interface. You just need to use *implements* clause to the class declaration and add the required methods  
+- Interfaces are ideal for defining mixins. There is a nice blog about how you can use mixins in Java: http://hannesdorfmann.com/android/java-mixins  
+- Interfaces allow for the construction of non-hierarchical type frameworks. They are great for organizing things that don't fall into a hierarchy  
+- Interfaces enable safe, powerful functionality enhancements via the wrapper class idiom (Item 18). If you use abstract classes, programmer should use the inheritance. The resulting classes are less powerful and more fragile  
+
+
+**Skeletal implementation class**  
+
+You can combine the advantages of interfaces and abstract classes using Skeletal implementation class. You can check following links for more information:       
+
+https://dzone.com/articles/favour-skeletal-interface-in-java  
+http://javaonfly.blogspot.com/2016/09/favaor-skeletal-implementation-in-java.html  
+https://stackoverflow.com/questions/13436995/why-and-when-to-use-skeletal-implementation-in-java  
+
+
 <a name="22">
 
 ## Item 22: Use interfaces only to define types  
@@ -217,7 +241,7 @@ public class ConstantsFoo {
 
 <a name="25">  
 
-# Item 25: Limit source files to a single top-level class  
+## Item 25: Limit source files to a single top-level class  
 
 Never put multiple top-level classes or interfaces in a single source file. Following this rule guarantees that you can’t have multiple definitions for a single class at compile time.  
 
@@ -242,9 +266,6 @@ public class Test {
 
 
 ```
-
-Bloch, Joshua. Effective Java (pp. 212-213). Pearson Education. Kindle Edition.  
-
 
 <a name="9"/>
 

@@ -12,6 +12,10 @@ Notes on the Effective Java 3rd Edition by Bloch, Joshua and code samples.
 [Item 22: Use interfaces only to define types](#22)  
 [Item 25: Limit source files to a single top-level class](#25)  
 
+#### [Lambdas and Streams](#7)  
+[Item 44: Favor the use of standard functional interfaces](#44)  
+
+
 #### [General Programming](#9)  
 
 [Item 57: Minimize the scope of local variables](#57)  
@@ -266,6 +270,64 @@ public class Test {
 
 
 ```
+
+<a name="7">
+	
+# Lambdas and Streams  
+
+<a name="44">  
+
+## Item 44: Favor the use of standard functional interfaces  
+
+```
+protected boolean removeEldestEntry(Map.Entry < K, V > eldest) { return size() > 100; }
+```
+
+If one of the standard functional interfaces does the job, you should generally use it in preference to a purpose-built functional interface. This will make your API easier to learn, by reducing its conceptual surface area, and will provide significant interoperability benefits.    
+
+Always annotate your functional interfaces with the @FunctionalInterface annotation  
+
+```
+// Unnecessary functional interface; use a standard one instead. 
+@FunctionalInterface interface EldestEntryRemovalFunction < K, V > {
+   boolean remove( Map < K, V > map, Map.Entry < K, V > eldest); 
+}
+```
+
+**Remember six basic interfaces. You can derive the rest when you need them**  
+
+UnaryOperator < T >  
+BinaryOperator < T >  
+Predicate < T >   
+Function < T, R >   
+Supplier < T >  
+Consumer < T > 
+
+**Examples**  
+
+*UnaryOperator<T>* interface receives a single argument and returns the same value  
+
+```
+List<String> names = Arrays.asList("fistik", "kus", "tomis");
+names.replaceAll(String::toLowerCase);
+```
+
+*BinaryOperator<T>* represents an operation upon two operands of the same type, producing a result of the same type as the operands  
+	
+```
+BinaryOperator<Integer> operator = (x,y) -> x + y;
+System.out.println(operator.apply(5, 10));
+
+BinaryOperator<Integer> bi = BinaryOperator.minBy(Comparator.reverseOrder());
+System.out.println(bi.apply(2, 3));
+
+
+BinaryOperator<Integer> bOpertorMax = BinaryOperator.maxBy((Integer t, Integer u) -> t.compareTo(u));
+System.out.println(bOpertorMax.apply(10,20));
+
+```
+
+
 
 <a name="9"/>
 

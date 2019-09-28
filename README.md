@@ -288,9 +288,10 @@ If one of the standard functional interfaces does the job, you should generally 
 Always annotate your functional interfaces with the @FunctionalInterface annotation  
 
 ```
-// Unnecessary functional interface; use a standard one instead. 
-@FunctionalInterface interface EldestEntryRemovalFunction < K, V > {
-   boolean remove( Map < K, V > map, Map.Entry < K, V > eldest); 
+// Unnecessary functional interface; use a standard one instead
+@FunctionalInterface 
+interface EldestEntryRemovalFunction < K, V > {
+   boolean remove(Map < K, V > map, Map.Entry < K, V > eldest); 
 }
 ```
 

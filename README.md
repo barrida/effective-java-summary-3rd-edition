@@ -311,15 +311,6 @@ System.out.print("\nThe Body Mass Index (BMI) is " + result + " kg/m2");
 
 ```
 
-*Supplier<T>* represents a supplier of results. There is no requirement that a new or distinct result be returned each time the supplier is invoked. This is a functional interface whose functional method is get()  
-	
-  // This function returns a random value. 
-        Supplier<Double> randomValue = () -> Math.random(); 
-  
-        // Print the random value using get() 
-        System.out.println(randomValue.get());
-
-
 **Remember six basic interfaces. You can derive the rest when you need them**  
 
 UnaryOperator <T> | BinaryOperator <T> | Predicate <T> | Function <T,R> | Supplier <T> | Consumer <T> 

@@ -279,30 +279,53 @@ public class Test {
 
 ## Item 44: Favor the use of standard functional interfaces  
 
-```
-protected boolean removeEldestEntry(Map.Entry < K, V > eldest) { return size() > 100; }
-```
+**If one of the standard functional interfaces does the job, you should generally use it in preference to a purpose-built functional interface** 
 
-If one of the standard functional interfaces does the job, you should generally use it in preference to a purpose-built functional interface. This will make your API easier to learn, by reducing its conceptual surface area, and will provide significant interoperability benefits.    
-
-Always annotate your functional interfaces with the @FunctionalInterface annotation  
+This will make your API easier to learn, by reducing its conceptual surface area, and will provide significant interoperability benefits 
 
 ```
 // Unnecessary functional interface; use a standard one instead
 @FunctionalInterface 
-interface EldestEntryRemovalFunction < K, V > {
-   boolean remove(Map < K, V > map, Map.Entry < K, V > eldest); 
+interface EldestEntryRemovalFunction <K, V> {
+   boolean remove(Map <K, V> map, Map.Entry <K, V> eldest); 
 }
 ```
 
+**Always annotate your functional interfaces with the @FunctionalInterface annotation**  
+
+@FunctionalInterface annotation is used to ensure that the functional interface can’t have more than one abstract method.
+
+```
+//user defined functional interface
+@FunctionalInterface
+interface BodyMassIndex 
+{ 
+     double calculate(double weight, double height);
+} 
+
+//usage
+
+BodyMassIndex bmi = (double weight, double height) -> weight / (height * height);
+double result = bmi.calculate(70, 1.7);
+System.out.print("\nThe Body Mass Index (BMI) is " + result + " kg/m2");
+
+```
+
+*Supplier<T>* represents a supplier of results. There is no requirement that a new or distinct result be returned each time the supplier is invoked. This is a functional interface whose functional method is get()  
+	
+  // This function returns a random value. 
+        Supplier<Double> randomValue = () -> Math.random(); 
+  
+        // Print the random value using get() 
+        System.out.println(randomValue.get());
+
+
 **Remember six basic interfaces. You can derive the rest when you need them**  
 
-UnaryOperator < T >  
-BinaryOperator < T >  
-Predicate < T >   
-Function < T, R >   
-Supplier < T >  
-Consumer < T > 
+UnaryOperator <T> | BinaryOperator <T> | Predicate <T> | Function <T,R> | Supplier <T> | Consumer <T> 
+--- | --- | --- | --- | --- | --- 
+T apply(T t) | T apply( T t1, T t2) | boolean test (T t) | R apply(T t) | T get() | void accept(T t)
+
 
 **Examples**  
 
@@ -328,8 +351,102 @@ System.out.println(bOpertorMax.apply(10,20));
 
 ```
 
+*Predicate <T>* represents a predicate (boolean-valued function) of one argument  
+
+```
+//simple filter
+List<Integer> numbers = Arrays.asList(10, 3, 6, 8 , 11);
+List<Integer> filteredNumbers = numbers.stream()
+		.filter(number -> number.intValue() > 5)
+		.collect(Collectors.toList());
+System.out.println("Predicate - single filter: " + filteredNumbers);
+
+//complex filter
+List<Integer> multipleFilters = numbers.stream()
+		.filter(number -> number.intValue() < 10)
+		.filter(number -> number.intValue() % 2 == 0)
+		.collect(Collectors.toList());
+System.out.println("Predicate - multiple filters: " + multipleFilters);
 
 
+//Combining predicates
+Predicate<Integer> predicate1 = number -> number.intValue() < 10;
+Predicate<Integer> predicate2 = number -> number.intValue() % 2 == 0;
+
+List<Integer> and = numbers.stream()
+		.filter(predicate1.and(predicate2))
+		.collect(Collectors.toList());
+System.out.println("Predicate - Predicate.and(): " + and);
+
+List<Integer> or = numbers.stream()
+		.filter(predicate1.or(predicate2))
+		.collect(Collectors.toList());
+System.out.println("Predicate - Predicate.or(): " + or);
+
+List<Integer> negate = numbers.stream()
+		.filter(predicate1.negate())
+		.collect(Collectors.toList());
+System.out.println("Predicate - Predicate.negate(): " + negate);
+```
+
+*Function<T,R>* represents a function that accepts one argument and produces a result. This is a functional interface whose functional method is apply(Object).
+
+
+```
+Function<Integer, Integer> multiply = (value) -> value * 2;
+Function<Integer, Integer> add = (value) -> value + 3;
+		
+//Returns a composed function that first applies the before function to its input, and then applies this function to the result.
+Function<Integer, Integer> addThenMultiply = multiply.compose(add);
+	
+//Applies this function to the given argument.
+Integer result1 = addThenMultiply.apply(3);
+System.out.println("Function: (3 + 3) * 2 " + result1);
+		
+//Returns a composed function that first applies this function to its input, and then applies the after function to the result.
+Function<Integer, Integer> multiplyThenAdd = multiply.andThen(add);
+		
+//Applies this function to the given argument.
+Integer result2 = multiplyThenAdd.apply(3);
+System.out.println("Function: 3 * 2 + 3 " + result2);
+
+```
+
+*Supplier<T>* represents a supplier of results. There is no requirement that a new or distinct result be returned each time the supplier is invoked. This is a functional interface whose functional method is get()  
+
+```
+
+public class Main {
+   public static void main(String[] args) {
+	List<String> supplements = Arrays.asList("bcaa", "creatin", "fish oil", "vitamin C");	
+	supplements.stream().forEach(supplement -> {
+		printSupplements(() -> supplement);
+	});
+   }
+   private static void printSupplements(Supplier<String> supplier){
+        System.out.println(supplier.get());
+   }
+}
+```
+
+*Consumer<T>* represents an operation that accepts a single input argument and returns no result. A common example of such an operation is printing where an object is taken as input to the printing function and the value of the object is printed. Unlike most other functional interfaces, Consumer is expected to operate via side-effects. This is a functional interface whose functional method is accept(Object). Since Consumer is a functional interface, hence it can be used as the assignment target for a lambda expression or a method reference    
+
+```
+public class Main {
+   public static void main(String[] args) {
+	Consumer<String> consumer = Main::printFoods;
+  	consumer.accept("beef");
+  	consumer.accept("brown rice");
+  	consumer.accept("salad");
+   }
+   private static void printFoods(String food){
+   	System.out.println(food);
+   }
+}   
+
+```
+
+	
 <a name="9"/>
 
 # General Programming

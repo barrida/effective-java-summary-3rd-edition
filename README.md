@@ -13,6 +13,8 @@ Notes on the Effective Java 3rd Edition by Bloch, Joshua and code samples.
 [Item 25: Limit source files to a single top-level class](#25)  
 
 #### [Lambdas and Streams](#7)  
+
+[Item 42: Prefer lambdas to anonymous classes](#42)  
 [Item 44: Favor the use of standard functional interfaces](#44)  
 
 
@@ -274,6 +276,72 @@ public class Test {
 <a name="7">
 	
 # Lambdas and Streams  
+
+<a name="42">  
+	
+## Item 42: Prefer lambdas to anonymous classes  
+
+<!-- wp:paragraph -->
+<p>Anonymous classes were adequate for the classic objected-oriented design patterns requiring function objects. Here’s a code snippet using an anonymous class. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted">// Anonymous class instance as a function object - obsolete! 
+Collections.sort(words, new Comparator&lt;String&gt;() { 
+    public int compare(String s1, String s2) { 
+         return Integer.compare(s1.length(), s2.length()); 
+    }
+});</pre>
+<!-- /wp:preformatted -->
+
+<!-- wp:paragraph -->
+<p>Interfaces with a single abstract method are now known as functional interfaces, and the language allows you to create instances of these interfaces using lambda expressions. Lambdas are similar in function to anonymous classes, but far more concise. Here’s how the code snippet above looks with the anonymous class replaced by a lambda. The boilerplate is gone: </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:preformatted -->
+<pre class="wp-block-preformatted">// Lambda expression as function object (replaces anonymous class)
+Collections.sort((s1, s2) -&gt; Integer.compare(s1.length(),s2.length()));</pre>
+<!-- /wp:preformatted -->
+
+<!-- wp:paragraph -->
+<p>The compiler deduces the types of lambda (<em>Comparator&lt;String&gt;</em>), of its parameters (<em>s1 and s2</em>), and of its return value (<em>int</em>) from context using <em>type inference</em>. You should omit the types of all lambda parameters unless their presence makes your program clearer.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>There is one caveat regarding type inference. If you use raw types instead of generic types, the compiler will be unable to do type inference. As compiler performs type inference from generics, you’ll have to specify types manually in your lambdas.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Function Objects</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>As of Java 8, lambdas are the best way to represent small function objects. A function can be passed as a parameter using compose and andThen functions in <em><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html">Function&lt;T, R&gt;</a></em><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html"> interface</a>. Here's a code snippet using<em> compose</em> function:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>Function&lt;Integer, Integer> multiply = (value) -> value * 2;
+Function&lt;Integer, Integer> add = (value) -> value + 3;
+
+//Returns a composed function that first applies the before function to its input, and then applies this function to the result.
+Function&lt;Integer, Integer> addThenMultiply = multiply.compose(add);
+
+//Applies this function to the given argument.
+Integer result1 = addThenMultiply.apply(3);
+System.out.println("Function: (3 + 3) * 2 " + result1);</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p><strong>Reasons not to use Lambda</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If a computation isn’t self-explanatory or exceeds a few lines, don’t put it in a lambda. One line is ideal for lambda, and three lines is a reasonable maximum. If you violate this rule, it can cause serious harm to the readability of your programs. </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>You shouldn't serialize a lambda (or an anonymous class instance). Lambdas share with anonymous classes the property that you can’t reliably serialize and deserialize them across implementations.  </p>
+<!-- /wp:paragraph -->
 
 <a name="44">  
 

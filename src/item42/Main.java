@@ -14,6 +14,11 @@ class Workout {
 		this.duration = duration;
 		this.type = type;
 	}
+	
+	public Workout(String type){
+		this.duration = Integer.valueOf(60);
+		this.type = type;
+	}
 
 	public Integer getDuration() {
 		return duration;
@@ -52,43 +57,82 @@ public class Main {
 	public static void main(String[] args) {
 
 		// 1. Reference to a static method
-		List<String> names = Arrays.asList("1", "2", "3");
-
-		// lambda equivalent
-		names.forEach(name -> Integer.parseInt(name));
-		System.out.println("lambda equivalent: " + names);
-
-		// method reference
-		names.forEach(Integer::parseInt);
-		System.out.println("method reference: " + names);
+		referenceToStaticMethod();
 
 		// 2. Reference to an instance method of a particular object
-		Workout[] workoutArray = { new Workout(60, "chest&back"), new Workout(50, "biceps&triceps"),
-				new Workout(70, "shoulders&legs") };
-		WorkoutComparator myWorkoutComparator = new WorkoutComparator();
+		referenceToInstance();
 
-		// The method reference myWorkoutComparator::compare invokes the method
-		// compare that is part of the object myWorkoutComparator.
-		// The JRE infers the method type arguments, which in this case are
-		// (Workout, Workout).
-		Arrays.sort(workoutArray, myWorkoutComparator::compare);
-
-		// lambda equivalent
-		Arrays.sort(workoutArray, (a, b) -> myWorkoutComparator.compare(a, b));
-
-		List<Workout> list = Arrays.asList(workoutArray);
-		list.forEach(a -> System.out.print(a.toString()));
-
-		// 3. Reference to an instance method of an arbitrary object of a
-		// particular type
-
-		String[] stringArray = { "Barbara", "James", "Mary", "John", "Patricia", "Robert", "Michael", "Linda" };
-		Arrays.sort(stringArray, String::compareTo); // method reference
-		Arrays.sort(stringArray, (a, b) -> a.compareTo(b)); // The equivalent lambda expression for the method reference
+		// 3. Reference to an instance method of an arbitrary object of a particular type
+		referenceToArbitraryObject(); 
 		
 		// 4. Reference to a Constructor
+		referenceToContructor();
+	}
+
+	/**
+	 * Reference to a constructor	
+	 * @author suleyman.yildirim
+	 */
+	private static void referenceToContructor() {
+		List<String> workputTypes = Arrays.asList("chest", "back", "legs");	
+		Workout[] workouts = workputTypes.stream()
+			.map(Workout::new)
+			.toArray(Workout[]::new);
+		for (Workout workout : workouts) {
+			System.out.println("Type: " + workout.getType() + " -Duration: "+ workout.getDuration());
+		}
+	}
+
+	/**
+	 * Reference to an instance method of an arbitrary object of a particular type
+	 * @author suleyman.yildirim
+	 */
+	private static void referenceToArbitraryObject() {
+		String[] family = { "Suleyman", "Canan", "Fatma", "Omur", "Tomis" };
+		// method reference
 		
+		Arrays.sort(family, String::compareTo);
+		// The equivalent lambda expression for the method reference
+		Arrays.sort(family, (a, b) -> a.compareTo(b));
+	}
+
+	/**
+	 * Reference to an instance method of a particular object
+	 * @author suleyman.yildirim
+	 */
+	private static void referenceToInstance() {
+		Workout[] workoutArray = { 
+				new Workout(60, "chest&back"),
+				new Workout(50, "biceps&triceps"),
+				new Workout(70, "shoulders&legs") 
+		};
 		
+		WorkoutComparator myWorkoutComparator = new WorkoutComparator();
+		
+		//method reference
+		Arrays.sort(workoutArray, myWorkoutComparator::compare);
+		
+		//lambda equivalent
+		Arrays.sort(workoutArray, (a, b) -> myWorkoutComparator.compare(a, b));
+		
+		List<Workout> list = Arrays.asList(workoutArray);
+		list.forEach(a -> System.out.println(a.toString()));
+	}
+
+	/**
+	 * Reference to a static method
+	 * @author suleyman.yildirim
+	 */
+	private static void referenceToStaticMethod() {
+		List<String> numbers = Arrays.asList("1", "2", "3");
+
+		// lambda equivalent
+		numbers.forEach(name -> Integer.parseInt(name));
+		System.out.println("lambda equivalent: " + numbers);
+
+		// method reference
+		numbers.forEach(Integer::parseInt);
+		System.out.println("method reference: " + numbers);
 	}
 
 }

@@ -1,4 +1,4 @@
-package item42;
+package item43;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -41,9 +41,7 @@ class Workout {
 	}
 }
 
-// Suppose that the members of your workout application are
-// contained in an array, and you want to sort the array by duration. You
-// could use the following code
+
 class WorkoutComparator implements Comparator<Workout> {
 
 	@Override
